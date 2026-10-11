@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="light" lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>HandsFree-Cook - Temassız Akıllı Mutfak Asistanı</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+
+        .glass-hud {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            box-shadow: 0 16px 40px -8px rgba(17, 28, 45, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+        }
+
+        @keyframes sensor-pulse {
+
+            0%,
+            100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.3;
+                transform: scale(1.35);
+            }
+        }
+
+        .animate-sensor {
+            animation: sensor-pulse 2.2s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F0F2F5] text-[#111c2d] font-['Plus_Jakarta_Sans'] antialiased overflow-hidden min-h-screen flex">
+
+    <!-- SOL MENÜ (Tarif Listesi) -->
+    <aside class="w-80 h-screen bg-white flex flex-col justify-between shrink-0 shadow-sm z-40 relative select-none">
+        <div class="flex flex-col h-full overflow-hidden">
+            <div class="p-5 pb-4 border-b border-slate-100">
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center text-white shadow-sm">
+                            <span class="material-symbols-outlined text-[20px]">skillet</span>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-bold text-slate-900 tracking-tight leading-none">HandsFree-Cook</h1>
+                            <span class="text-xs text-slate-500 tracking-wider uppercase font-semibold">Akıllı Mutfak
+                                Asistanı</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Canlı Sensör Rozeti -->
+                <div
+                    class="mt-3 py-2 px-3 rounded-full bg-emerald-50/80 border border-emerald-200/60 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span
+                                class="animate-sensor absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span class="text-xs text-emerald-700 font-semibold">Temassız Sensör: Aktif</span>
+                    </div>
+                    <span class="text-xs px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">60 FPS</span>
+                </div>
+            </div>
+
+            <!-- Tarifler Listesi (Flask ile dinamik geliyor) -->
+            <div class="flex-1 overflow-y-auto p-5 space-y-3">
+                <div class="flex items-center justify-between px-1 mb-1">
+                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Günün Tarifleri</h2>
+                    <span class="text-xs text-emerald-600 font-bold">{{ tarifler|length }} Tarif</span>
+                </div>
+                <div class="space-y-2.5">
+                    {% for i in range(tarifler|length) %}
+                    <div onclick="tarifSec({{ i }}, this)"
+                        class="recipe-card p-3.5 rounded-2xl {% if i == 0 %}bg-gradient-to-br from-emerald-50/90 to-white border-2 border-emerald-500/80 shadow-sm{% else %}bg-white border border-slate-200/70 hover:border-emerald-500/40 hover:bg-slate-50{% endif %} transition-all duration-200 cursor-pointer">
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <span class="text-sm font-bold text-slate-800 line-clamp-1">{{ tarifler[i]['tarif_adi']
+                                }}</span>
+                            {% if i == 0 %}<span
+                                class="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[11px] font-bold shrink-0">Aktif</span>{%
+                            endif %}
+                        </div>
+                        <p class="text-xs text-emerald-600 font-medium flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[14px]">timer</span> {{ tarifler[i]['sure'] }}
+                            dk
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- SAĞ ÇALIŞMA ALANI (Kamera ve Cam Bilgi Kartı) -->
+    <main class="flex-1 h-screen flex flex-col bg-[#F0F2F5] overflow-hidden">
+        <section class="flex-1 p-6 overflow-hidden flex flex-col justify-center items-center relative">
+            <div
+                class="w-full max-w-5xl h-full max-h-[780px] rounded-[28px] overflow-hidden relative shadow-2xl border border-white/90 bg-slate-900 flex flex-col justify-between">
+
+                <!-- Canlı Kamera Akışı (Flask /video_feed buraya basılıyor) -->
+                <img src="{{ url_for('video_feed') }}"
+                    class="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                    alt="Kamera Akışı">
+
+                <!-- Karartma / Vignette -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-slate-900/20 pointer-events-none">
+                </div>
+
+                <!-- Sağ/Sol Jest Alanı Göstergeleri -->
+                <div
+                    class="absolute left-0 top-0 bottom-0 w-16 z-20 pointer-events-none bg-gradient-to-r from-slate-900/20 to-transparent">
+                </div>
+                <div
+                    class="absolute right-0 top-0 bottom-0 w-16 z-20 pointer-events-none bg-gradient-to-l from-emerald-500/20 to-transparent">
+                </div>
+
+                <!-- Buzlu Cam Bilgi Kartı (Adım Bilgisi) -->
+                <div class="relative z-20 p-6 pt-0 w-full flex justify-center">
+                    <div class="glass-hud w-full max-w-3xl rounded-2xl p-6 relative overflow-hidden shadow-lg">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span id="adim-badge"
+                                class="px-3 py-0.5 rounded-full bg-emerald-500 text-white text-xs font-extrabold tracking-wider uppercase shadow-sm">ADIM
+                                1 / 5</span>
+                            <span id="tarif-baslik"
+                                class="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[16px] text-emerald-600">skillet</span>
+                                Yükleniyor...
+                            </span>
+                        </div>
+                        <h3 id="adim-metin" class="text-lg font-bold text-slate-800 mb-1 leading-snug">Sistem
+                            Hazırlanıyor...</h3>
+                        <!-- Progress Bar -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-slate-200/80">
+                            <div id="progress-bar"
+                                class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-500"
+                                style="width: 20%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function tarifSec(index, element) {
+            // Kart stillerini güncelle
+            document.querySelectorAll('.recipe-card').forEach(card => {
+                card.className = "recipe-card p-3.5 rounded-2xl bg-white border border-slate-200/70 hover:border-emerald-500/40 hover:bg-slate-50 transition-all duration-200 cursor-pointer";
+                let badge = card.querySelector('span.bg-emerald-500');
+                if (badge) badge.remove();
+            });
+            element.className = "recipe-card p-3.5 rounded-2xl bg-gradient-to-br from-emerald-50/90 to-white border-2 border-emerald-500/80 shadow-sm cursor-pointer";
+            element.querySelector('.flex.items-start').insertAdjacentHTML('beforeend', '<span class="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[11px] font-bold shrink-0">Aktif</span>');
+
+            // Flask sunucusuna seçimi bildir
+            fetch('/set_recipe/' + index)
+                .then(res => res.json())
+                .then(data => guncelleUI(data));
+        }
+
+        // Her saniye arka plandan güncel adım verisini çekip arayüzü yenile
+        function durumKontrol() {
+            fetch('/get_status')
+                .then(res => res.json())
+                .then(data => guncelleUI(data));
+        }
+        setInterval(durumKontrol, 500); // Yarım saniyede bir senkronize et
+
+        function guncelleUI(data) {
+            document.getElementById('tarif-baslik').innerHTML = `<span class="material-symbols-outlined text-[16px] text-emerald-600">skillet</span> ${data.tarif_adi}`;
+            document.getElementById('adim-badge').innerText = `ADIM ${data.guncel_adim + 1} / ${data.toplam_adim}`;
+            document.getElementById('adim-metin').innerText = data.adim_metni;
+
+            let yuzde = ((data.guncel_adim + 1) / data.toplam_adim) * 100;
+            document.getElementById('progress-bar').style.width = yuzde + '%';
+        }
+    </script>
+</body>
+
+</html>
