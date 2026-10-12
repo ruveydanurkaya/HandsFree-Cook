@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, jsonify
+from flask import Flask, render_template, Response, jsonify, request
 import cv2
 import pandas as pd
 import ast
@@ -6,7 +6,7 @@ import mediapipe as mp
 
 app = Flask(__name__)
 
-# Veri setini yükle
+# Veri setini 'recipes.csv' üzerinden yükle
 try:
     df = pd.read_csv("recipes.csv")
 except:
@@ -17,18 +17,28 @@ secili_tarif_index = 0
 guncel_adim = 0
 el_merkezde = True
 
-# MediaPipe ayarları
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(max_num_hands=1, min_detection_confidence=0.7)
 
-# 1. YENİ ANA SAYFA (Katalog Sayfası)
 @app.route('/')
 def index():
-    # Tariflerin tümünü sözlük olarak ana sayfaya gönder
-    tarifler_listesi = df.to_dict('records')
-    return render_template('index.html', tarifler=tarifler_listesi)
+    secilen_kategori = request.args.get('kategori', 'Tümü')
+    
+    # Kategoriye göre filtreleme yapıyoruz
+    if secilen_kategori and secilen_kategori != 'Tümü':
+        filtrelenmis_df = df[df['kategori'] == secilen_kategori]
+    else:
+        filtrelenmis_df = df
+        
+    # Orijinal CSV indekslerini kaybetmemek için 'orijinal_index' ekliyoruz
+    tarifler_listesi = []
+    for idx, row in filtrelenmis_df.iterrows():
+        t = row.to_dict()
+        t['orijinal_index'] = idx
+        tarifler_listesi.append(t)
+        
+    return render_template('index.html', tarifler=tarifler_listesi, secilen_kategori=secilen_kategori)
 
-# 2. KAMERA MODU SAYFASI
 @app.route('/kamera/<int:tarif_id>')
 def kamera(tarif_id):
     global secili_tarif_index, guncel_adim
@@ -37,7 +47,6 @@ def kamera(tarif_id):
     tarifler_listesi = df.to_dict('records')
     return render_template('kamera.html', tarifler=tarifler_listesi)
 
-# API ve Kamera Akışı Route'ları (Aynı kalıyor)
 @app.route('/set_recipe/<int:index>')
 def set_recipe(index):
     global secili_tarif_index, guncel_adim
@@ -50,17 +59,14 @@ def get_status():
     tarif_adi = str(df.iloc[secili_tarif_index]['tarif_adi'])
     tarif_suresi = int(df.iloc[secili_tarif_index]['sure'])
     tarif_adimlari = ast.literal_eval(df.iloc[secili_tarif_index]['adimlar'])
-    
-    # Yeni eklenen malzemeler satırı:
     malzemeler = ast.literal_eval(df.iloc[secili_tarif_index]['malzemeler'])
-    
     return jsonify({
         'tarif_adi': tarif_adi,
         'sure': tarif_suresi,
         'guncel_adim': guncel_adim,
         'toplam_adim': len(tarif_adimlari),
         'adim_metni': tarif_adimlari[guncel_adim],
-        'malzemeler': malzemeler  # HTML'e gönderiyoruz
+        'malzemeler': malzemeler
     })
 
 def generate_frames():
@@ -83,7 +89,6 @@ def generate_frames():
         ileri_parliyor = False
         geri_parliyor = False
         
-        # El Jest Kontrolü (Apple Tarzı Yumuşak İmleç)
         if results.multi_hand_landmarks:
             for hand_landmarks in results.multi_hand_landmarks:
                 isaret_x = int(hand_landmarks.landmark[8].x * w)
@@ -107,7 +112,6 @@ def generate_frames():
                 else:
                     el_merkezde = True
 
-        # Yumuşak Kenar Parlamaları
         overlay = frame.copy()
         if geri_parliyor:
             for i in range(40):

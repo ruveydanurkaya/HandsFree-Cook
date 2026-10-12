@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>HandsFree-Cook</title>
+    <title>HandsFree-Cook — Bugün Ne Pişirmek İstersiniz?</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -35,37 +35,40 @@
             Kameranızı açın ve ekranınıza dokunmadan yemek yapmanın keyfini çıkarın. Havada zarif bir el hareketiyle adımlar arasında gezinin.
         </p>
 
-        <!-- Filtre Butonları -->
+        <!-- Dinamik Kategori Filtre Butonları -->
         <div class="flex flex-wrap justify-center gap-3">
-            <button class="px-5 py-2 rounded-full bg-emerald-500 text-white font-semibold text-sm shadow-md shadow-emerald-500/20">Tümü</button>
-            <button class="px-5 py-2 rounded-full bg-white text-slate-600 hover:text-emerald-600 font-medium text-sm border border-slate-200 hover:border-emerald-200 transition-colors">Başlangıç & Çorbalar</button>
-            <button class="px-5 py-2 rounded-full bg-white text-slate-600 hover:text-emerald-600 font-medium text-sm border border-slate-200 hover:border-emerald-200 transition-colors">Ana Yemekler</button>
-            <button class="px-5 py-2 rounded-full bg-white text-slate-600 hover:text-emerald-600 font-medium text-sm border border-slate-200 hover:border-emerald-200 transition-colors">Tatlılar</button>
-            <button class="px-5 py-2 rounded-full bg-white text-slate-600 hover:text-emerald-600 font-medium text-sm border border-slate-200 hover:border-emerald-200 transition-colors">Kahvaltı</button>
+            <a href="/" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Tümü' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-semibold text-sm transition-colors">Tümü</a>
+            <a href="/?kategori=Balık Tarifleri" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Balık Tarifleri' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-medium text-sm transition-colors">Balık Tarifleri</a>
+            <a href="/?kategori=Hamur İşi" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Hamur İşi' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-medium text-sm transition-colors">Hamur İşi</a>
+            <a href="/?kategori=Tavuk Tarifleri" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Tavuk Tarifleri' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-medium text-sm transition-colors">Tavuk Tarifleri</a>
+            <a href="/?kategori=Börek Tarifleri" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Börek Tarifleri' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-medium text-sm transition-colors">Börek Tarifleri</a>
+            <a href="/?kategori=Tatlı Tarifleri" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Tatlı Tarifleri' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-medium text-sm transition-colors">Tatlı Tarifleri</a>
+            <a href="/?kategori=Salata Tarifleri" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Salata Tarifleri' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-medium text-sm transition-colors">Salata Tarifleri</a>
+            <a href="/?kategori=Kahvaltılık" class="px-5 py-2 rounded-full {% if secilen_kategori == 'Kahvaltılık' %}bg-emerald-500 text-white shadow-md shadow-emerald-500/20{% else %}bg-white text-slate-600 hover:text-emerald-600 border border-slate-200{% endif %} font-medium text-sm transition-colors">Kahvaltılık</a>
         </div>
     </header>
 
     <!-- TARİFLER BÖLÜMÜ -->
     <main class="max-w-7xl mx-auto px-6 pb-24">
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-slate-900 mb-1">Tarifler</h2>
-            <p class="text-sm text-slate-500">Temassız pişirme asistanı ile optimize edilmiş gurme seçenekler</p>
+        <div class="mb-8 flex justify-between items-end">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 mb-1">Tarifler {% if secilen_kategori != 'Tümü' %}<span class="text-emerald-600">({{ secilen_kategori }})</span>{% endif %}</h2>
+                <p class="text-sm text-slate-500">Temassız pişirme asistanı ile optimize edilmiş gurme seçenekler</p>
+            </div>
         </div>
 
         <!-- Kart Grid Yapısı -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            {% for i in range(tarifler|length) %}
+            {% for t in tarifler %}
             <article class="bg-white rounded-3xl p-4 border border-slate-100 soft-shadow hover-shadow transition-all duration-300 flex flex-col justify-between">
                 <div>
-                    <!-- Dinamik Resim Alanı -->
+                    <!-- Resim Alanı -->
                     <div class="relative w-full h-48 rounded-2xl bg-slate-100 mb-4 flex items-center justify-center overflow-hidden group">
-                        <!-- Çatal bıçak yerine artık kalıcı görsel var -->
-                        <img src="{{ tarifler[i]['gorsel_url'] }}" alt="{{ tarifler[i]['tarif_adi'] }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <img src="{{ t['gorsel_url'] }}" alt="{{ t['tarif_adi'] }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                         
-                        <!-- DİNAMİK KATEGORİ ROZETİ BURADA -->
                         <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg">
-                            <span class="text-xs font-bold text-emerald-600">{{ tarifler[i]['kategori'] }}</span>
+                            <span class="text-xs font-bold text-emerald-600">{{ t['kategori'] }}</span>
                         </div>
                         
                         <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm w-8 h-8 rounded-full flex items-center justify-center shadow-sm">
@@ -75,18 +78,18 @@
 
                     <div class="px-2">
                         <div class="flex items-center gap-3 text-xs font-semibold text-slate-500 mb-2">
-                            <span class="flex items-center gap-1 text-emerald-600"><span class="material-symbols-outlined text-[14px]">timer</span> {{ tarifler[i]['sure'] }} dk</span>
+                            <span class="flex items-center gap-1 text-emerald-600"><span class="material-symbols-outlined text-[14px]">timer</span> {{ t['sure'] }} dk</span>
                             <span>•</span>
                             <span>Optimum</span>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 line-clamp-1">{{ tarifler[i]['tarif_adi'] }}</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2 mb-4">{{ tarifler[i]['ozet'] }}</p>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 line-clamp-1">{{ t['tarif_adi'] }}</h3>
+                        <p class="text-sm text-slate-500 line-clamp-2 mb-4">{{ t['ozet'] }}</p>
                     </div>
                 </div>
 
                 <div class="px-2 pb-2">
-                    <!-- Flask Route'una (Kamera) Yönlendiren Buton -->
-                    <a href="{{ url_for('kamera', tarif_id=i) }}" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold flex items-center justify-center gap-2 transition-colors">
+                    <!-- Orijinal indeks korunarak kamera moduna yönlendirilir -->
+                    <a href="{{ url_for('kamera', tarif_id=t['orijinal_index']) }}" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold flex items-center justify-center gap-2 transition-colors">
                         <span>Tarife Başla (Kamera Modu)</span>
                         <span class="material-symbols-outlined text-[18px]">videocam</span>
                     </a>
