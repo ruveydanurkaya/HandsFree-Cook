@@ -1,121 +1,151 @@
 import pandas as pd
 import json
 
-# 10 tariflik zengin veri setimiz ve hazırlık süreleri (dakika)
+base_url = "https://yemekyarismasi.com"
+
 veri = [
     {
-        "tarif_adi": "Karnıyarık",
+        "tarif_adi": "Fırında Zeytinyağlı Sardalya",
         "sure": 45,
+        "kategori": "Balık Tarifleri",
+        "gorsel_url": f"{base_url}/resim/firinda-zeytinyagli-sardalya-tarifi.webp",
+        "malzemeler": json.dumps(["500g temizlenmiş sardalya", "2 adet kırmızı soğan", "15-20 adet çeri domates", "Yarım çay bardağı zeytinyağı", "1 adet limon", "Tuz, karabiber"]),
         "adimlar": json.dumps([
-            "Patlıcanları alacalı soyup yağda hafifçe kızartın.",
-            "Soğan, biber ve kıymayı tavada kavurarak iç harcı hazırlayın.",
-            "Kızaran patlıcanların ortasını yarıp iç harcı doldurun.",
-            "Salçalı su ekleyip önceden ısıtılmış fırında 25 dakika pişirin.",
-            "Sıcak servis yapın, afiyet olsun."
+            "Sardalyaları temizleyip yıkayın ve suyunu süzün.",
+            "Kırmızı soğanları halka halka doğrayıp tepsinin tabanına dizin.",
+            "Üzerine sardalyaları yerleştirip çeri domates ve sarımsakları ekleyin.",
+            "Zeytinyağı, limon suyu, tuz ve karabiberi karıştırıp balıkların üzerinde gezdirin.",
+            "Önceden ısıtılmış 200 derece fırında 25-30 dakika pişirin."
         ])
     },
     {
-        "tarif_adi": "Mercimek Çorbası",
-        "sure": 30,
+        "tarif_adi": "Evde Kaşarlı Sucuklu Pide",
+        "sure": 75,
+        "kategori": "Hamur İşi",
+        "gorsel_url": f"{base_url}/resim/evde-pide-tarifi.webp",
+        "malzemeler": json.dumps(["500g un", "1 bardak ılık su", "Yarım bardak ılık süt", "1 paket kuru maya", "200g kaşar peyniri", "150g sucuk"]),
         "adimlar": json.dumps([
-            "Soğan, havuç ve patatesi doğrayıp tencerede yağ ile kavurun.",
-            "Yıkanmış kırmızı mercimekleri ekleyip 1-2 dakika daha kavurun.",
-            "Üzerine sıcak su ve tuz ekleyip sebzeler yumuşayana kadar kaynatın.",
-            "Tüm malzemeleri blenderdan geçirip pürüzsüz hale getirin.",
-            "Üzerine tereyağında kızdırılmış nane dökerek servis yapın."
+            "Un, ılık su, süt, maya, şeker ve tuzu karıştırıp yumuşak bir hamur yoğurun.",
+            "Hamurun üzerini kapatıp 45 dakika mayalanmaya bırakın.",
+            "Mayalanan hamurdan bezeler alıp uzunlamasına oval şekilde açın.",
+            "Ortasına rendelenmiş kaşar ve sucuk dilimlerini yerleştirip kenarlarını kıvırın.",
+            "Kenarlarına yumurta sarısı sürüp 200 derece fırında kızarana kadar pişirin."
         ])
     },
     {
-        "tarif_adi": "Menemen",
-        "sure": 15,
-        "adimlar": json.dumps([
-            "İnce doğranmış sivri biberleri sıvı yağda hafifçe kavurun.",
-            "Kabukları soyulmuş ve küp küp doğranmış domatesleri tavaya ekleyin.",
-            "Domatesler suyunu çekip yumuşayana kadar kısık ateşte pişirin.",
-            "Yumurtaları kırıp tuz ekleyin ve hafifçe karıştırın.",
-            "Yumurtalar pişene kadar bekleyip ocaktan alın."
-        ])
-    },
-    {
-        "tarif_adi": "Kısır",
-        "sure": 20,
-        "adimlar": json.dumps([
-            "İnce bulguru geniş bir kaba alıp üzerini geçecek kadar sıcak su ekleyin.",
-            "Bulgurlar şiene kadar üzerini kapatıp 10 dakika bekletin.",
-            "Domates ve biber salçası ekleyip bulgura iyice yedirerek yoğurun.",
-            "İnce kıyılmış taze soğan, maydanoz ve kıvırcığı ekleyin.",
-            "Limon suyu, nar ekşisi ve zeytinyağı ilave edip karıştırın."
-        ])
-    },
-    {
-        "tarif_adi": "Kremalı Mantarlı Tagliatelle",
+        "tarif_adi": "Mantarlı Tavuk Jülyen",
         "sure": 25,
+        "kategori": "Tavuk Tarifleri",
+        "gorsel_url": f"{base_url}/resim/mantarli-tavuk-julyen-tarifi.webp",
+        "malzemeler": json.dumps(["500g tavuk göğsü", "300g taze mantar", "1 kutu (200ml) krema", "1 adet kuru soğan", "2 diş sarımsak", "Sıvı yağ, tuz, kekik"]),
         "adimlar": json.dumps([
-            "Makarnayı tuzlu kaynar suda 10 dakika haşlayıp suyunu süzün.",
-            "Ayrı bir tavada zeytinyağını ısıtıp dilimlenmiş mantarları ekleyin.",
-            "Mantarlar suyunu çekene kadar yaklaşık 5 dakika kavurun.",
-            "Sosu krema ve taze fesleğen ile bağlayıp kısık ateşte 2 dakika ısıtın.",
-            "Haşlanan makarnaları sosa ilave edip iyice harmanlayın."
+            "Tavuk göğsünü jülyen (uzun ince) şekilde doğrayın.",
+            "Tavada sıvı yağı ısıtıp tavukları suyunu salıp çekene kadar soteleyin.",
+            "Doğranmış soğan, sarımsak ve mantarları ekleyip kavurmaya devam edin.",
+            "Mantarlar suyunu çekince kremayı, tuzu ve baharatları ilave edin.",
+            "Kısık ateşte sos koyulaşana kadar 5 dakika daha pişirip sıcak servis yapın."
         ])
     },
     {
-        "tarif_adi": "Fırın Somon",
-        "sure": 35,
+        "tarif_adi": "Kıymalı Gül Böreği",
+        "sure": 30,
+        "kategori": "Börek Tarifleri",
+        "gorsel_url": f"{base_url}/resim/kiymali-gul-borek-tarifi.webp",
+        "malzemeler": json.dumps(["3-4 adet taze yufka", "300g dana kıyma", "1 adet kuru soğan", "1 çay bardağı süt", "Yarım çay bardağı sıvı yağ", "Tuz, karabiber"]),
         "adimlar": json.dumps([
-            "Somon filetolarını yıkayıp kağıt havlu ile kurulayın.",
-            "Zeytinyağı, limon suyu, tuz ve baharatları bir kasede karıştırın.",
-            "Soslu karışımı somonların üzerine fırçayla homojen şekilde sürün.",
-            "Fırın tepsisine yağlı kağıt serip somonları ve taze biberiyeleri dizin.",
-            "Önceden ısıtılmış 200 derece fırında 20 dakika pişirin."
+            "Kıymayı soğan ve sıvı yağ ile tavada kavurun, baharatlarını ekleyip soğutun.",
+            "Yufkaları dörde bölerek üçgen parçalar elde edin.",
+            "Süt, sıvı yağ ve maden suyu ile hazırladığınız sosu yufkalara sürün.",
+            "Geniş kısma kıymalı harcı koyup rulo sarın ve kendi etrafında dolayarak gül şekli verin.",
+            "Üzerine yumurta sarısı sürüp 180 derece fırında kızarana kadar pişirin."
         ])
     },
     {
-        "tarif_adi": "Avokadolu Poşe Yumurta",
+        "tarif_adi": "Şekerpare",
+        "sure": 40,
+        "kategori": "Tatlı Tarifleri",
+        "gorsel_url": f"{base_url}/resim/sekerpare-tarifi.webp",
+        "malzemeler": json.dumps(["125g tereyağı", "Yarım su bardağı pudra şekeri", "2 adet yumurta", "1 su bardağı irmik", "2.5 su bardağı un", "Şerbet: 3 bardak şeker, 3 bardak su"]),
+        "adimlar": json.dumps([
+            "Su ve şekeri kaynatıp içine limon sıkarak şerbeti hazırlayın ve soğumaya bırakın.",
+            "Oda sıcaklığındaki tereyağı, pudra şekeri ve yumurtayı karıştırın.",
+            "İrmik, un, kabartma tozu ve vanilyayı ekleyip ele yapışmayan bir hamur yoğurun.",
+            "Hamurdan ceviz büyüklüğünde parçalar koparıp yuvarlayın ve tepsiye dizin.",
+            "180 derece fırında kızarana kadar pişirin, fırından çıkar çıkmaz soğuk şerbeti dökün."
+        ])
+    },
+    {
+        "tarif_adi": "Geleneksel Kısır",
+        "sure": 20,
+        "kategori": "Salata Tarifleri",
+        "gorsel_url": f"{base_url}/resim/kisir-tarifi.webp",
+        "malzemeler": json.dumps(["2 su bardağı ince bulgur", "2 yemek kaşığı salça (biber/domates)", "Yarım demet taze soğan, maydanoz, nane", "Yarım çay bardağı zeytinyağı", "Nar ekşisi, limon suyu, tuz"]),
+        "adimlar": json.dumps([
+            "İnce bulguru derin bir kaba alıp üzerini geçecek kadar sıcak su ile ıslatın ve dinlendirin.",
+            "Şişen bulgura domates ve biber salçasını ekleyip rengi dönene kadar iyice yoğurun.",
+            "İnce kıyılmış taze soğan, maydanoz ve naneyi ilave edin.",
+            "Zeytinyağı, limon suyu, nar ekşisi ve baharatları ekleyip iyice harmanlayın.",
+            "Taze marul yaprakları ile servis edin."
+        ])
+    },
+    {
+        "tarif_adi": "Çıtır Sokak Simidi",
+        "sure": 60,
+        "kategori": "Hamur İşi",
+        "gorsel_url": f"{base_url}/resim/simit-tarifi.webp",
+        "malzemeler": json.dumps(["4 su bardağı un", "1.5 su bardağı ılık su", "1 paket maya", "Yarım çay bardağı sıvı yağ", "1 çay bardağı pekmez", "Bol kavrulmuş susam"]),
+        "adimlar": json.dumps([
+            "Un, ılık su, maya, şeker, tuz ve sıvı yağı karıştırarak ele yapışmayan bir hamur yoğurun.",
+            "Hamuru 45 dakika mayalandırın.",
+            "Pekmez ve suyu geniş bir kapta karıştırın, susamları tavada hafifçe kavurun.",
+            "Hamurdan bezeler alıp şeritler halinde uzatın, ikili burgu yapıp halka şekli verin.",
+            "Simitleri önce pekmezli suya, sonra susama bulayıp 200 derece fırında pişirin."
+        ])
+    },
+    {
+        "tarif_adi": "İtalyan Ekmeği Focaccia",
+        "sure": 65,
+        "kategori": "Hamur İşi",
+        "gorsel_url": f"{base_url}/resim/italyan-ekmegi-focaccia-tarifi.webp",
+        "malzemeler": json.dumps(["500g un", "400ml ılık su", "1 paket kuru maya", "Yarım çay bardağı zeytinyağı", "Biberiye, taze kekik", "Kaya tuzu, zeytin, çeri domates"]),
+        "adimlar": json.dumps([
+            "Un, ılık su, maya, şeker, tuz ve zeytinyağı ile çok yumuşak bir hamur yoğurun.",
+            "Hamuru yağlanmış fırın kabına alıp üzerini kapatarak 1 saat mayalandırın.",
+            "Parmak uçlarınızı yağlayıp hamurun üzerine bastırarak çukurlar oluşturun.",
+            "Üzerine zeytinyağı gezdirip biber, soğan veya zeytin ile süsleyin.",
+            "200 derece fırında üzeri altın sarısı olana kadar pişirin."
+        ])
+    },
+    {
+        "tarif_adi": "Avokadolu Karides Salatası",
         "sure": 15,
+        "kategori": "Salata Tarifleri",
+        "gorsel_url": f"{base_url}/resim/avakadolu-karides-salatasi-tarifi.webp",
+        "malzemeler": json.dumps(["300g haşlanmış karides", "2 adet olgun avokado", "1 adet mor soğan", "Akdeniz yeşillikleri", "Zeytinyağı, limon suyu, hardal"]),
         "adimlar": json.dumps([
-            "Olgun avokadoyu çatal ile ezerek limon suyu ve tuzla püreyi hazırlayın.",
-            "Tencerede kaynayan suya bir kaşık sirke ekleyip girdap oluşturun.",
-            "Yumurtayı girdabın ortasına kırıp 3 dakika haşlayın.",
-            "Kızarmış ekmek dilimlerine avokado püresini sürün.",
-            "Üzerine poşe yumurtayı yerleştirip servis yapın."
+            "Karidesleri ayıklayıp hafifçe haşlayın veya tereyağında soteleyin.",
+            "Avokadoları ve mor soğanları küp küp doğrayın.",
+            "Akdeniz yeşilliklerini geniş bir kaseye alın.",
+            "Üzerine avokado, soğan ve karidesleri ekleyin.",
+            "Zeytinyağı, limon ve hardal ile hazırladığınız sosu gezdirerek servis yapın."
         ])
     },
     {
-        "tarif_adi": "Akdeniz Salatası",
-        "sure": 15,
+        "tarif_adi": "Çiçek Yumurta (Sunumluk)",
+        "sure": 10,
+        "kategori": "Kahvaltılık",
+        "gorsel_url": f"{base_url}/resim/cicek-yumurta-tarifi.webp",
+        "malzemeler": json.dumps(["2 adet kalın kesilmiş kırmızı kapya biber", "2 adet yumurta", "1 tatlı kaşığı tereyağı", "Tuz, karabiber", "Çörek otu"]),
         "adimlar": json.dumps([
-            "Domates, salatalık ve biberleri küp şeklinde doğrayın.",
-            "Geniş bir kaseye aldığınız sebzelere siyah zeytin ekleyin.",
-            "Zeytinyağı, limon suyu ve tuzu bir kasede çırpıp salataya gezdirin.",
-            "Üzerine küp doğranmış beyaz peynir ekleyip hafifçe karıştırın."
-        ])
-    },
-    {
-        "tarif_adi": "Ev Yapımı Lahmacun",
-        "sure": 50,
-        "adimlar": json.dumps([
-            "Un, su ve mayayı yoğurarak yumuşak bir hamur elde edin.",
-            "Kıyma, soğan, domates, biber ve baharatları robottan geçirip harç hazırlayın.",
-            "Mayalanan hamurdan bezeler yapıp merdaneyle incece açın.",
-            "Hazırladığınız iç harcı hamurun üzerine ince bir tabaka halinde yayın.",
-            "Önceden ısıtılmış yüksek dereceli fırında altı kızarana kadar pişirin."
-        ])
-    },
-    {
-        "tarif_adi": "Fırında Sütlaç",
-        "sure": 45,
-        "adimlar": json.dumps([
-            "Pirinci yıkayıp suda yumuşayana kadar haşlayın.",
-            "Süt ve şekeri tencerede kaynatıp haşlanmış pirinçleri ekleyin.",
-            "Nişastayı az suyla açıp tencereye yavaşça dökerek kıvam verin.",
-            "Vanilya ekleyip karıştırın ve ısıya dayanıklı kaplara paylaştırın.",
-            "Fırın tepsisine su koyup kapları dizin ve üzerleri kızarana kadar fırınlayın."
+            "Kırmızı kapya biberleri kalın halkalar halinde kesin.",
+            "Tavada tereyağını eritip biber halkalarını tavaya yerleştirin.",
+            "Her bir biber halkasının içine birer yumurta kırın.",
+            "Tuz, karabiber ve çörek otu serpiştirin.",
+            "Yumurtalar istediğiniz kıvama gelene kadar pişirip servis tabağına alın."
         ])
     }
 ]
 
-# DataFrame'e dönüştürüp CSV olarak kaydediyoruz
 df = pd.DataFrame(veri)
 df.to_csv('benim_tariflerim.csv', index=False, encoding='utf-8')
-
-print("Harika! 'benim_tariflerim.csv' hazırlama süreleriyle birlikte güncellendi.")
+print("Veri seti malzemeler listesi ile güncellendi!")
