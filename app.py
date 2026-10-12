@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 # Veri setini yükle
 try:
-    df = pd.read_csv("benim_tariflerim.csv")
+    df = pd.read_csv("recipes.csv")
 except:
-    print("HATA: 'benim_tariflerim.csv' bulunamadı!")
+    print("HATA: 'recipes.csv' bulunamadı!")
     exit()
 
 secili_tarif_index = 0

@@ -9,6 +9,7 @@ veri = [
         "sure": 45,
         "kategori": "Balık Tarifleri",
         "gorsel_url": f"{base_url}/resim/firinda-zeytinyagli-sardalya-tarifi.webp",
+        "ozet": "Taze otlar, zeytinyağı ve limonla harmanlanmış, fırında nar gibi kızaran hafif ve sağlıklı bir balık ziyafeti.",
         "malzemeler": json.dumps(["500g temizlenmiş sardalya", "2 adet kırmızı soğan", "15-20 adet çeri domates", "Yarım çay bardağı zeytinyağı", "1 adet limon", "Tuz, karabiber"]),
         "adimlar": json.dumps([
             "Sardalyaları temizleyip yıkayın ve suyunu süzün.",
@@ -23,6 +24,7 @@ veri = [
         "sure": 75,
         "kategori": "Hamur İşi",
         "gorsel_url": f"{base_url}/resim/evde-pide-tarifi.webp",
+        "ozet": "Dışı çıtır, içi yumuşacık hamuruyla fırından yeni çıkmış bol malzemeli nefis ev yapımı pide.",
         "malzemeler": json.dumps(["500g un", "1 bardak ılık su", "Yarım bardak ılık süt", "1 paket kuru maya", "200g kaşar peyniri", "150g sucuk"]),
         "adimlar": json.dumps([
             "Un, ılık su, süt, maya, şeker ve tuzu karıştırıp yumuşak bir hamur yoğurun.",
@@ -37,6 +39,7 @@ veri = [
         "sure": 25,
         "kategori": "Tavuk Tarifleri",
         "gorsel_url": f"{base_url}/resim/mantarli-tavuk-julyen-tarifi.webp",
+        "ozet": "Krema ve mantarın muhteşem uyumuyla hazırlanan, damak çatlatan pratik ve doyurucu tavuk jülyen.",
         "malzemeler": json.dumps(["500g tavuk göğsü", "300g taze mantar", "1 kutu (200ml) krema", "1 adet kuru soğan", "2 diş sarımsak", "Sıvı yağ, tuz, kekik"]),
         "adimlar": json.dumps([
             "Tavuk göğsünü jülyen (uzun ince) şekilde doğrayın.",
@@ -51,6 +54,7 @@ veri = [
         "sure": 30,
         "kategori": "Börek Tarifleri",
         "gorsel_url": f"{base_url}/resim/kiymali-gul-borek-tarifi.webp",
+        "ozet": "Hazır yufkadan yapılan, dışı çıtır içi ise yumuşacık, porsiyonluk nefis kıymalı açık gül böreği.",
         "malzemeler": json.dumps(["3-4 adet taze yufka", "300g dana kıyma", "1 adet kuru soğan", "1 çay bardağı süt", "Yarım çay bardağı sıvı yağ", "Tuz, karabiber"]),
         "adimlar": json.dumps([
             "Kıymayı soğan ve sıvı yağ ile tavada kavurun, baharatlarını ekleyip soğutun.",
@@ -65,6 +69,7 @@ veri = [
         "sure": 40,
         "kategori": "Tatlı Tarifleri",
         "gorsel_url": f"{base_url}/resim/sekerpare-tarifi.webp",
+        "ozet": "Ağızda dağılan kıvamı ve tam ölçülü şerbetiyle çay saatlerinin vazgeçilmezi, pastane usulü şekerpare.",
         "malzemeler": json.dumps(["125g tereyağı", "Yarım su bardağı pudra şekeri", "2 adet yumurta", "1 su bardağı irmik", "2.5 su bardağı un", "Şerbet: 3 bardak şeker, 3 bardak su"]),
         "adimlar": json.dumps([
             "Su ve şekeri kaynatıp içine limon sıkarak şerbeti hazırlayın ve soğumaya bırakın.",
@@ -79,6 +84,7 @@ veri = [
         "sure": 20,
         "kategori": "Salata Tarifleri",
         "gorsel_url": f"{base_url}/resim/kisir-tarifi.webp",
+        "ozet": "Bol yeşillik ve nar ekşisiyle harmanlanmış, damaklarda iz bırakan nefis geleneksel Hatay kısırı.",
         "malzemeler": json.dumps(["2 su bardağı ince bulgur", "2 yemek kaşığı salça (biber/domates)", "Yarım demet taze soğan, maydanoz, nane", "Yarım çay bardağı zeytinyağı", "Nar ekşisi, limon suyu, tuz"]),
         "adimlar": json.dumps([
             "İnce bulguru derin bir kaba alıp üzerini geçecek kadar sıcak su ile ıslatın ve dinlendirin.",
@@ -93,6 +99,7 @@ veri = [
         "sure": 60,
         "kategori": "Hamur İşi",
         "gorsel_url": f"{base_url}/resim/simit-tarifi.webp",
+        "ozet": "Evde kolayca yapabileceğiniz, dışı bol susamlı, pekmezli ve çıtır çıtır gerçek sokak simidi.",
         "malzemeler": json.dumps(["4 su bardağı un", "1.5 su bardağı ılık su", "1 paket maya", "Yarım çay bardağı sıvı yağ", "1 çay bardağı pekmez", "Bol kavrulmuş susam"]),
         "adimlar": json.dumps([
             "Un, ılık su, maya, şeker, tuz ve sıvı yağı karıştırarak ele yapışmayan bir hamur yoğurun.",
@@ -107,6 +114,7 @@ veri = [
         "sure": 65,
         "kategori": "Hamur İşi",
         "gorsel_url": f"{base_url}/resim/italyan-ekmegi-focaccia-tarifi.webp",
+        "ozet": "Zeytinyağı ve taze baharatların enfes kokusuyla taçlanmış, dışı çıtır içi yumuşacık İtalyan bahçe ekmeği.",
         "malzemeler": json.dumps(["500g un", "400ml ılık su", "1 paket kuru maya", "Yarım çay bardağı zeytinyağı", "Biberiye, taze kekik", "Kaya tuzu, zeytin, çeri domates"]),
         "adimlar": json.dumps([
             "Un, ılık su, maya, şeker, tuz ve zeytinyağı ile çok yumuşak bir hamur yoğurun.",
@@ -121,6 +129,7 @@ veri = [
         "sure": 15,
         "kategori": "Salata Tarifleri",
         "gorsel_url": f"{base_url}/resim/avakadolu-karides-salatasi-tarifi.webp",
+        "ozet": "Taze deniz ürünleri ve avokadonun ferahlatıcı uyumuyla hazırlanan sağlıklı, hafif ve şık gurme salata.",
         "malzemeler": json.dumps(["300g haşlanmış karides", "2 adet olgun avokado", "1 adet mor soğan", "Akdeniz yeşillikleri", "Zeytinyağı, limon suyu, hardal"]),
         "adimlar": json.dumps([
             "Karidesleri ayıklayıp hafifçe haşlayın veya tereyağında soteleyin.",
@@ -135,6 +144,7 @@ veri = [
         "sure": 10,
         "kategori": "Kahvaltılık",
         "gorsel_url": f"{base_url}/resim/cicek-yumurta-tarifi.webp",
+        "ozet": "Kahvaltı sofralarınızı görsel bir şölene çevirecek, kırmızı kapya biber halkaları içinde sunumluk nefis yumurta.",
         "malzemeler": json.dumps(["2 adet kalın kesilmiş kırmızı kapya biber", "2 adet yumurta", "1 tatlı kaşığı tereyağı", "Tuz, karabiber", "Çörek otu"]),
         "adimlar": json.dumps([
             "Kırmızı kapya biberleri kalın halkalar halinde kesin.",
@@ -147,5 +157,5 @@ veri = [
 ]
 
 df = pd.DataFrame(veri)
-df.to_csv('benim_tariflerim.csv', index=False, encoding='utf-8')
-print("Veri seti malzemeler listesi ile güncellendi!")
+df.to_csv('recipes.csv', index=False, encoding='utf-8')
+print("Veri seti güncellendi!")
